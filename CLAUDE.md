@@ -87,3 +87,23 @@ docker compose up --build -d
 ```
 
 Each environment has its own `.env` (API URL, etc.) and nginx config. Add new tenant deployments by copying an existing folder and customizing.
+
+## Vercel Deployment
+
+The frontend can also be deployed to Vercel (connected to the Supabase backend at
+`personal_blog_backend_deno`):
+
+```bash
+# Set environment variables
+vercel env add SUPABASE_URL        # https://<project>.supabase.co
+vercel env add SUPABASE_ANON_KEY   # Production anon key
+
+# Deploy
+vercel           # Preview
+vercel --prod    # Production
+```
+
+**How it works:** A Vercel Edge Function (`api/[...path].js`) catches all `/api/*`
+requests and proxies them to Supabase (PostgREST views for reads, Edge Functions
+for writes/auth), transforming responses into Laravel-compatible `{ data, meta }`
+format. The frontend requires zero changes — `VITE_API_BASE_URL=/api` stays as-is.
