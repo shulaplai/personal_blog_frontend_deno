@@ -163,8 +163,8 @@ function buildTarget(route, parsedUrl, body) {
   }
 
   if (route.t.paginated) {
-    const page = parseInt(q.get('page')) || 1;
-    const perPage = parseInt(q.get('per_page')) || 15;
+    const page = Math.max(1, parseInt(q.get('page')) || 1);
+    const perPage = Math.max(1, Math.min(100, parseInt(q.get('per_page')) || 15));
     const offset = (page - 1) * perPage;
     pgParams.set('limit', String(perPage));
     pgParams.set('offset', String(offset));
@@ -205,7 +205,7 @@ async function fetchChapterBySlug(params) {
     { headers },
   );
   if (!novelRes.ok) {
-    return { status: 404, body: JSON.stringify({ message: 'Novel not found' }) };
+    return { status: novelRes.status, body: JSON.stringify({ message: 'Novel fetch failed' }) };
   }
   const novels = await novelRes.json();
   if (!novels.length) {
@@ -232,8 +232,8 @@ async function fetchChapterBySlug(params) {
 // ---------------------------------------------------------------------------
 function transformPaginated(json, contentRange, searchParams) {
   const data = Array.isArray(json) ? json : [];
-  const perPage = parseInt(searchParams.get('per_page')) || 15;
-  const page = parseInt(searchParams.get('page')) || 1;
+  const perPage = Math.max(1, Math.min(100, parseInt(searchParams.get('per_page')) || 15));
+  const page = Math.max(1, parseInt(searchParams.get('page')) || 1);
 
   let total = data.length;
   if (contentRange) {
@@ -349,13 +349,12 @@ export default async function handler(request) {
 
     // 204 No Content
     if (supabaseRes.status === 204) {
-      return new Response('', { status: 204, headers: resHeaders });
+      return new Response('', { status: 204, headers: { 'Access-Control-Allow-Origin': '*' } });
     }
 
     let resBody = await supabaseRes.text();
 
     // Rewrite internal storage URLs
-    resBody = resBody.replaceAll('http://kong:8000', SUPABASE_URL);
 
     const supabaseContentType = supabaseRes.headers.get('Content-Type') || '';
     const isJson = supabaseContentType.includes('application/json');
@@ -370,7 +369,11 @@ export default async function handler(request) {
 
     // Non-JSON response — return as-is (unlikely but safe)
     if (!isJson || !resBody) {
-      return new Response(resBody || '', { status: supabaseRes.status, headers: resHeaders });
+      const passthroughHeaders = {
+        'Content-Type': supabaseContentType || 'text/plain',
+        'Access-Control-Allow-Origin': '*',
+      };
+      return new Response(resBody || '', { status: supabaseRes.status, headers: passthroughHeaders });
     }
 
     const json = JSON.parse(resBody);
