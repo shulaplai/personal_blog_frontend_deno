@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@theme {
+  --color-highlight: #659EB9;
+  --color-background: #FCFCFD;
+  --color-foreground: #1a1a2e;
+  --color-muted: #f3f4f6;
+  --color-muted-foreground: #6b7280;
+  --color-border: #e5e7eb;
+  --color-primary: #659EB9;
+  --color-primary-foreground: #f0f7fa;
+  --color-code-bg: #f8fafc;
+  --color-code-fg: #1e293b;
+  --font-sans: 'Satoshi', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius-lg: 0.5rem;
+  --radius-2xl: 1rem;
+}
+
+.dark {
+  --color-background: #0B0B10;
+  --color-foreground: #e5e7eb;
+  --color-muted: #1f2937;
+  --color-muted-foreground: #9ca3af;
+  --color-border: #1f2937;
+  --color-primary: #B3ECFF;
+  --color-primary-foreground: #1e293b;
+  --color-code-bg: #111827;
+  --color-code-fg: #e5e7eb;
+}
+
+/* Base */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Highlight gradient */
+.highlight-gradient {
+  background-image: linear-gradient(var(--color-highlight), transparent);
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  0% { transform: translateY(2rem); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fade-in-up 300ms forwards;
+}
+
+@media (prefers-reduced-motion) {
+  .animate-fade-in {
+    animation-duration: 100ms;
+  }
+}
+
+.animate-delay-50 { animation-delay: 50ms; }
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-150 { animation-delay: 150ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+
+/* Link arrow animation */
+.link-arrow {
+  transition: transform 0.3s ease-in-out;
+}
+.group\/link:hover .link-arrow {
+  transform: translateX(0.25rem);
+}
+
+/* Section link hover */
+.section-link {
+  transition: background-color 0.2s;
+}
+.section-link:hover {
+  background-color: var(--color-primary-foreground);
+}
+
+/* Post preview hover */
+.post-preview {
+  transition: background-color 0.2s;
+}
+.post-preview:hover {
+  background-color: var(--color-muted);
+}
+
+/* Frosted glass */
+.glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(252, 252, 253, 0.8);
+}
+.dark .glass {
+  background-color: rgba(11, 11, 16, 0.8);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted-foreground);
+  border-radius: 3px;
+}
+
+/* Smooth transitions for theme — scoped to semantic elements only.
+   Avoids the expensive [class*="hover:"] universal selector that forces
+   the browser to re-evaluate every element on every style recalculation. */
+a, button, input, select, textarea,
+.theme-transition,
+.card, .prose, .glass,
+header, footer, nav, main, article, aside,
+.bg-background, .bg-muted, .bg-primary-foreground,
+.border-border {
+  transition-property: color, background-color, border-color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}

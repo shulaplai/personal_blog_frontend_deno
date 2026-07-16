@@ -1,0 +1,45 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "confirm": "Confirm",
+    "search": "Search",
+    "noData": "No content",
+    "confirmDelete": "Are you sure? This action cannot be undone."
+  },
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "projects": "Projects",
+    "novels": "Novels",
+    "about": "About"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "posts": "Posts",
+    "projects": "Projects",
+    "novels": "Novels",
+    "media": "Media",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "CMS Login",
+    "loginDesc": "Sign in to manage your content",
+    "email": "Email",
+    "password": "Password",
+    "loginBtn": "Sign In",
+    "loggingIn": "Signing in…"
+  },
+  "status": {
+    "draft": "Draft",
+    "published": "Published",
+    "archived": "Archived",
+    "ongoing": "Ongoing",
+    "completed": "Completed",
+    "hiatus": "Hiatus"
+  }
+}

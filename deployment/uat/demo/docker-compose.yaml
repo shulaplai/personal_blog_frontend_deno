@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  frontend:
+    restart: always
+    build:
+      context: ../../../.
+      dockerfile: ./deployment/uat/demo/Dockerfile
+    image: personal-blog-frontend-uat:latest
+    container_name: personal-blog-frontend-uat
+    networks:
+      - app-net
+    ports:
+      - '9080:443'
+networks:
+  app-net:
+    name: 'personal-blog-net-uat'

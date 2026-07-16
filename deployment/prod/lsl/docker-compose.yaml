@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  frontend:
+    restart: always
+    build:
+      context: ../../../.
+      dockerfile: ./deployment/prod/lsl/Dockerfile
+    image: personal-blog-frontend-prod:latest
+    container_name: personal-blog-frontend-prod
+    networks:
+      - app-net
+    ports:
+      - '443:443'
+networks:
+  app-net:
+    name: 'personal-blog-net-prod'
