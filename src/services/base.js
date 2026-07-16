@@ -26,7 +26,14 @@ api.interceptors.request.use(
 
 // Response interceptor — handle 401
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Edge case fallback: if a raw PostgREST array arrives (edge function
+    // should have transformed it, but be safe), wrap it in { data } format.
+    if (Array.isArray(response.data)) {
+      return { ...response, data: { data: response.data } };
+    }
+    return response;
+  },
   (error) => {
     // Only handle real 401 (not network errors, not CORS, not 500s)
     if (error.response?.status === 401) {
