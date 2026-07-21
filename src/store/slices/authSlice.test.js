@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer, { clearError, logoutUser } from './authSlice';
+import authReducer, { clearError } from './authSlice';
 
 function createMockStore() {
   return configureStore({

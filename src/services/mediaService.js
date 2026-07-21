@@ -9,7 +9,7 @@ const mediaService = {
     formData.append('file', file);
     return api.post('/admin/media/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      onUploadProgress: (progressEvent) => {
+      onUploadProgress: (_progressEvent) => {
         // progress handled in slice
       },
     });
