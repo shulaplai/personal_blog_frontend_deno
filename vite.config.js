@@ -27,12 +27,15 @@ export default defineConfig(({ mode }) => {
       port: 5173,
     },
     build: {
+      sourcemap: false,
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules/@mui/')) return 'mui';
             if (id.includes('node_modules/@tiptap/')) return 'tiptap';
-            if (id.includes('node_modules/@reduxjs/') || id.includes('node_modules/react-redux')) return 'redux';
+            if (id.includes('node_modules/@reduxjs/') || id.includes('node_modules/react-redux'))
+              return 'redux';
           },
         },
       },
