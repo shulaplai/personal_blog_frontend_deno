@@ -54,9 +54,10 @@ export default function AppRoutes() {
           <Route path="blog/:slug" element={<SuspenseWrapper><BlogDetailPage /></SuspenseWrapper>} />
           <Route path="projects" element={<SuspenseWrapper><ProjectsPage /></SuspenseWrapper>} />
           <Route path="projects/:slug" element={<SuspenseWrapper><ProjectDetailPage /></SuspenseWrapper>} />
-          <Route path="novels" element={<SuspenseWrapper><NovelsPage /></SuspenseWrapper>} />
-          <Route path="novels/:slug" element={<SuspenseWrapper><NovelDetailPage /></SuspenseWrapper>} />
-          <Route path="novels/:novelSlug/chapters/:chapterNumber" element={<SuspenseWrapper><ChapterReadPage /></SuspenseWrapper>} />
+          {/* Novels hidden — see spec 2026-07-21-cv-frontend-improvements-design.md */}
+          {/* <Route path="novels" element={<SuspenseWrapper><NovelsPage /></SuspenseWrapper>} /> */}
+          {/* <Route path="novels/:slug" element={<SuspenseWrapper><NovelDetailPage /></SuspenseWrapper>} /> */}
+          {/* <Route path="novels/:novelSlug/chapters/:chapterNumber" element={<SuspenseWrapper><ChapterReadPage /></SuspenseWrapper>} /> */}
           <Route path="about" element={<SuspenseWrapper><AboutPage /></SuspenseWrapper>} />
         </Route>
 
