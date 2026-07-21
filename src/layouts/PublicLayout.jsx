@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchPublicSettings } from '@/store/slices/publicSettingsSlice';
 import { useDarkMode } from '@/context/ThemeContext';
 import { GitHubIcon, SunIcon, MoonIcon, MenuIcon, CloseIcon } from '@/components/public/Icons';
+import { profile } from '@/data/profile';
 
 const NAV_ITEMS = [
   { label: 'Home', path: '/' },
@@ -37,7 +38,7 @@ export default function PublicLayout({ children }) {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  const siteName = settings.site_name || 'Personal Blog';
+  const siteName = settings.site_name || profile.name;
   const githubUrl = settings.social_github || 'https://github.com';
   const isActive = useCallback((path) => location.pathname === path, [location.pathname]);
 

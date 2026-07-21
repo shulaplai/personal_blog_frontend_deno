@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
+import { profile } from '@/data/profile';
 
-const BASE_TITLE = 'Personal Blog';
+const BASE_TITLE = profile.name;
 
 /**
  * Sets the document title. Restores the base title on unmount.

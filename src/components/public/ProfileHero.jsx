@@ -27,23 +27,26 @@ export default function ProfileHero() {
 
   return (
     <div className="mb-10 flex flex-col items-center gap-y-5">
-      {/* Avatar */}
-      <div className="flex size-28 items-center justify-center rounded-full border border-border bg-muted text-3xl font-bold text-muted-foreground">
-        {profile.name.charAt(0)}
+      {/* Avatar with glow */}
+      <div className="relative inline-flex">
+        <div className="absolute -inset-2 rounded-full bg-primary/10 blur-md" />
+        <div className="relative flex size-28 items-center justify-center rounded-full border-2 border-border bg-muted text-3xl font-bold text-muted-foreground ring-4 ring-background">
+          {profile.name.charAt(0)}
+        </div>
       </div>
 
       {/* Name & Title */}
-      <div className="flex flex-col items-center gap-y-1.5">
-        <h1 className="text-3xl font-bold text-foreground">
+      <div className="flex flex-col items-center gap-y-1">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">
           {profile.name}
           {profile.nameZh && (
-            <span className="ml-2 text-xl font-normal text-muted-foreground">
+            <span className="ml-2.5 text-xl font-normal text-muted-foreground">
               · {profile.nameZh}
             </span>
           )}
         </h1>
-        <p className="text-base font-medium text-foreground">{profile.title}</p>
-        <p className="text-sm text-muted-foreground">{profile.tagline}</p>
+        <p className="text-sm font-semibold text-foreground/80">{profile.title}</p>
+        <p className="mt-0.5 text-sm text-muted-foreground">{profile.tagline}</p>
       </div>
 
       {/* Tech pills */}
@@ -51,18 +54,21 @@ export default function ProfileHero() {
         {topTechs.map((tech) => (
           <span
             key={tech}
-            className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/30 hover:text-foreground"
+            className="rounded-full border border-border bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground transition-all hover:border-primary/30 hover:bg-primary-foreground hover:text-foreground"
           >
             {tech}
           </span>
         ))}
+        <span className="rounded-full border border-border bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground">
+          +{Object.values(profile.techStack).flat().length - topTechs.length} more
+        </span>
       </div>
 
       {/* Contact row */}
-      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm">
         <a
           href={`mailto:${profile.email}`}
-          className="inline-flex items-center gap-x-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-muted-foreground no-underline transition-colors hover:bg-muted hover:text-primary"
+          className="inline-flex items-center gap-x-2 rounded-lg border border-border bg-background px-3.5 py-2 text-muted-foreground no-underline transition-all hover:bg-muted hover:text-primary hover:shadow-sm"
         >
           <MailIcon />
           <span>Email</span>
@@ -71,14 +77,14 @@ export default function ProfileHero() {
           href={`https://${profile.github}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-x-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-muted-foreground no-underline transition-colors hover:bg-muted hover:text-primary"
+          className="inline-flex items-center gap-x-2 rounded-lg border border-border bg-background px-3.5 py-2 text-muted-foreground no-underline transition-all hover:bg-muted hover:text-primary hover:shadow-sm"
         >
           <GitHubIcon />
           <span>GitHub</span>
         </a>
         <RouterLink
           to="/about"
-          className="inline-flex items-center gap-x-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-muted-foreground no-underline transition-colors hover:bg-muted hover:text-primary"
+          className="inline-flex items-center gap-x-2 rounded-lg border border-primary/30 bg-primary-foreground px-3.5 py-2 text-sm font-medium text-primary no-underline transition-all hover:bg-primary hover:text-white hover:shadow-sm"
         >
           <span>View Resume</span>
         </RouterLink>
