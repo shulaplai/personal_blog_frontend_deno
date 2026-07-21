@@ -62,9 +62,7 @@ export default function PublicLayout({ children }) {
       <header className="sticky top-4 z-[70] mb-12 px-4 sm:px-7 lg:px-10">
         <div
           className={`mx-auto flex max-w-3xl items-center justify-between rounded-xl border px-4 py-3 transition-all sm:rounded-2xl ${
-            scrolled
-              ? 'glass border-border shadow-sm'
-              : 'border-transparent bg-transparent'
+            scrolled ? 'glass border-border shadow-sm' : 'border-transparent bg-transparent'
           }`}
         >
           {/* Site name */}
@@ -86,6 +84,7 @@ export default function PublicLayout({ children }) {
                     ? 'text-primary bg-primary-foreground'
                     : 'text-muted-foreground hover:text-primary hover:bg-primary-foreground'
                 }`}
+                aria-current={isActive(item.path) ? 'page' : undefined}
               >
                 {item.label}
               </RouterLink>
@@ -141,6 +140,7 @@ export default function PublicLayout({ children }) {
                       ? 'text-primary bg-primary-foreground'
                       : 'text-muted-foreground hover:text-primary hover:bg-muted'
                   }`}
+                  aria-current={isActive(item.path) ? 'page' : undefined}
                 >
                   {item.label}
                 </RouterLink>
@@ -152,9 +152,7 @@ export default function PublicLayout({ children }) {
 
       {/* Main content */}
       <main className="relative z-0 flex-1 px-4 sm:px-7 lg:px-10" id="public-main-content">
-        <div className="mx-auto w-full max-w-3xl">
-          {children}
-        </div>
+        <div className="mx-auto w-full max-w-3xl">{children}</div>
       </main>
 
       {/* Footer */}
@@ -176,11 +174,21 @@ export default function PublicLayout({ children }) {
               </a>
               <span>
                 Built with{' '}
-                <a href="https://react.dev" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
+                <a
+                  href="https://react.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground hover:text-primary transition-colors"
+                >
                   React
-                </a>
-                {' '}&{' '}
-                <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-primary transition-colors">
+                </a>{' '}
+                &{' '}
+                <a
+                  href="https://vitejs.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground hover:text-primary transition-colors"
+                >
                   Vite
                 </a>
               </span>

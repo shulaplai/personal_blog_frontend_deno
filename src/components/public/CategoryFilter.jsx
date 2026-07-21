@@ -7,8 +7,15 @@ export default function CategoryFilter({ categories, activeCategory, onSelect })
         分類
       </Typography>
       <List dense disablePadding>
-        <ListItemButton selected={!activeCategory} onClick={() => onSelect('')} sx={{ borderRadius: 1 }}>
-          <ListItemText primary={`全部 (${categories.reduce((sum, c) => sum + (c.posts_count || 0), 0)})`} />
+        <ListItemButton
+          selected={!activeCategory}
+          onClick={() => onSelect('')}
+          sx={{ borderRadius: 1 }}
+          aria-current={!activeCategory ? 'page' : undefined}
+        >
+          <ListItemText
+            primary={`全部 (${categories.reduce((sum, c) => sum + (c.posts_count || 0), 0)})`}
+          />
         </ListItemButton>
         {categories.map((cat) => (
           <ListItemButton
@@ -16,6 +23,7 @@ export default function CategoryFilter({ categories, activeCategory, onSelect })
             selected={activeCategory === cat.slug}
             onClick={() => onSelect(cat.slug)}
             sx={{ borderRadius: 1 }}
+            aria-current={activeCategory === cat.slug ? 'page' : undefined}
           >
             <ListItemText primary={`${cat.name} (${cat.posts_count || 0})`} />
           </ListItemButton>

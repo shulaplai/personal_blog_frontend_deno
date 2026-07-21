@@ -15,6 +15,7 @@ export default function GenreFilter({ activeGenre, onSelect }) {
           color={!activeGenre ? 'primary' : 'default'}
           variant={!activeGenre ? 'filled' : 'outlined'}
           onClick={() => onSelect('')}
+          aria-pressed={!activeGenre ? true : false}
         />
         {COMMON_GENRES.map((genre) => (
           <Chip
@@ -24,6 +25,7 @@ export default function GenreFilter({ activeGenre, onSelect }) {
             color={activeGenre === genre ? 'primary' : 'default'}
             variant={activeGenre === genre ? 'filled' : 'outlined'}
             onClick={() => onSelect(genre)}
+            aria-pressed={activeGenre === genre ? true : false}
           />
         ))}
       </Box>
