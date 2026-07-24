@@ -6,9 +6,11 @@ import { fetchPublicPosts } from '@/store/slices/publicPostsSlice';
 import { fetchPublicProjects } from '@/store/slices/publicProjectsSlice';
 import { formatDate } from '@/utils/formatters';
 import { useDocumentTitle } from '@/utils/useDocumentTitle';
-import { ArrowRightIcon } from '@/components/public/Icons';
+import { ArrowRightIcon, GitHubIcon } from '@/components/public/Icons';
 import ProfileHero from '@/components/public/ProfileHero';
 import { SkeletonLine, SkeletonBlock } from '@/components/public/Skeletons';
+import { profile } from '@/data/profile';
+import { useThemeStyle } from '@/context/ThemeContext';
 
 function SectionTitle({ children }) {
   return (
@@ -43,6 +45,7 @@ export default function HomePage() {
     status: projectsStatus,
   } = useAppSelector((state) => state.publicProjects);
   const { settings } = useAppSelector((state) => state.publicSettings);
+  const { themeStyle } = useThemeStyle();
 
   useDocumentTitle('');
 
@@ -71,9 +74,61 @@ export default function HomePage() {
       </Helmet>
       <div className="flex w-full flex-col items-center">
         {/* Hero Section */}
-        <section className="animate-fade-in animate-delay-50 relative z-50">
-          <ProfileHero />
-        </section>
+        {themeStyle === 'joye' ? (
+          <section className="animate-fade-in animate-delay-50 relative z-50 mb-10 flex flex-col items-center gap-y-7">
+            {/* Avatar */}
+            <div className="h-28 w-auto rounded-full border p-1">
+              <div className="flex h-full w-full items-center justify-center rounded-full bg-muted text-3xl font-bold text-muted-foreground">
+                {profile.name.charAt(0)}
+              </div>
+            </div>
+            <div className="flex flex-col items-center gap-y-4">
+              <h1 className="text-3xl font-bold">{profile.name}</h1>
+              <div className="flex flex-wrap justify-center gap-x-7 gap-y-3 text-sm text-muted-foreground">
+                <span className="inline-flex items-center gap-x-1.5">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  Hong Kong
+                </span>
+                <a
+                  href={`https://${profile.github}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-x-1.5 hover:text-primary transition-colors no-underline"
+                >
+                  <GitHubIcon size={16} />
+                  GitHub
+                </a>
+              </div>
+            </div>
+            {/* Connect Me */}
+            <a
+              href="/about"
+              className="flex flex-row items-center gap-x-3 rounded-full border bg-background px-4 py-2 text-sm shadow-sm transition-shadow hover:shadow-md no-underline"
+            >
+              <span className="relative flex items-center justify-center">
+                <span className="absolute size-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75" />
+                <span className="size-2 rounded-full bg-green-400" />
+              </span>
+              <span className="font-medium text-muted-foreground">Connect Me!</span>
+            </a>
+          </section>
+        ) : (
+          <section className="animate-fade-in animate-delay-50 relative z-50">
+            <ProfileHero />
+          </section>
+        )}
 
         {/* Main content */}
         <div className="animate-fade-in animate-delay-100 relative z-0 flex w-full min-w-0 flex-col gap-y-10">
