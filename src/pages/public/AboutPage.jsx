@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchPublicSettings } from '@/store/slices/publicSettingsSlice';
 import { useDocumentTitle } from '@/utils/useDocumentTitle';
+import { useThemeStyle } from '@/context/ThemeContext';
 import { profile } from '@/data/profile';
 import ExperienceTimeline from '@/components/public/ExperienceTimeline';
 import ProfileSidebar from '@/components/public/ProfileSidebar';
@@ -56,6 +57,8 @@ function SectionHeader({ icon, title }) {
 export default function AboutPage() {
   const dispatch = useAppDispatch();
   const { settings, status } = useAppSelector((state) => state.publicSettings);
+  const { themeStyle } = useThemeStyle();
+  const isJoye = themeStyle === 'joye';
 
   useDocumentTitle('About');
 
@@ -96,50 +99,84 @@ export default function AboutPage() {
           <p className="mt-2 text-sm font-medium text-muted-foreground">{profile.title}</p>
         </div>
 
-        {/* Split layout */}
-        <div className="flex flex-col gap-y-5 md:flex-row md:gap-x-6">
-          {/* Left column */}
-          <div className="flex flex-1 flex-col gap-y-5 md:w-[65%]">
-            {/* About Me */}
-            <div className="rounded-2xl border border-border bg-background p-6 transition-shadow hover:shadow-sm">
-              <SectionHeader icon={<UserIcon />} title="About Me" />
+        {isJoye ? (
+          /* Joye: single-column flow */
+          <div className="flex flex-col gap-y-8">
+            <section>
+              <h2 className="mb-3 text-2xl font-medium">About Me</h2>
               {status === 'loading' ? (
                 <div className="space-y-3">
                   <div className="h-4 w-full animate-pulse rounded bg-muted" />
                   <div className="h-4 w-5/6 animate-pulse rounded bg-muted" />
-                  <div className="h-4 w-4/6 animate-pulse rounded bg-muted" />
                 </div>
               ) : (
-                <p className="whitespace-pre-wrap leading-relaxed text-sm text-muted-foreground">
+                <p className="whitespace-pre-wrap leading-relaxed text-muted-foreground">
                   {settings.about_me || 'No introduction yet.'}
                 </p>
               )}
-            </div>
-
-            {/* Experience */}
+            </section>
             <ExperienceTimeline />
-
-            {/* Soft Skills */}
-            <div className="rounded-2xl border border-border bg-background p-6 transition-shadow hover:shadow-sm">
-              <SectionHeader icon={<HeartIcon />} title="Soft Skills" />
+            <section>
+              <h2 className="mb-3 text-2xl font-medium">Skills</h2>
               <div className="flex flex-wrap gap-2">
                 {profile.softSkills.map((skill) => (
                   <span
                     key={skill}
-                    className="rounded-full border border-border bg-muted/60 px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-all hover:border-primary/30 hover:bg-primary-foreground hover:text-foreground"
+                    className="card-lift rounded-full border border-border bg-background px-3.5 py-1.5 text-xs font-medium text-muted-foreground"
                   >
                     {skill}
                   </span>
                 ))}
               </div>
-            </div>
-          </div>
-
-          {/* Right column */}
-          <div className="w-full md:w-[35%]">
+            </section>
             <ProfileSidebar />
           </div>
-        </div>
+        ) : (
+          /* Default: split layout */
+          <div className="flex flex-col gap-y-5 md:flex-row md:gap-x-6">
+            {/* Left column */}
+            <div className="flex flex-1 flex-col gap-y-5 md:w-[65%]">
+              {/* About Me */}
+              <div className="rounded-2xl border border-border bg-background p-6 transition-shadow hover:shadow-sm">
+                <SectionHeader icon={<UserIcon />} title="About Me" />
+                {status === 'loading' ? (
+                  <div className="space-y-3">
+                    <div className="h-4 w-full animate-pulse rounded bg-muted" />
+                    <div className="h-4 w-5/6 animate-pulse rounded bg-muted" />
+                    <div className="h-4 w-4/6 animate-pulse rounded bg-muted" />
+                  </div>
+                ) : (
+                  <p className="whitespace-pre-wrap leading-relaxed text-sm text-muted-foreground">
+                    {settings.about_me || 'No introduction yet.'}
+                  </p>
+                )}
+              </div>
+
+              {/* Experience */}
+              <ExperienceTimeline />
+
+              {/* Soft Skills */}
+              <div className="rounded-2xl border border-border bg-background p-6 transition-shadow hover:shadow-sm">
+                <SectionHeader icon={<HeartIcon />} title="Soft Skills" />
+                <div className="flex flex-wrap gap-2">
+                  {profile.softSkills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full border border-border bg-muted/60 px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-all hover:border-primary/30 hover:bg-primary-foreground hover:text-foreground"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right column */}
+            <div className="w-full md:w-[35%]">
+              <ProfileSidebar />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
