@@ -5,7 +5,7 @@ const ProjectCard = memo(function ProjectCard({ project }) {
   return (
     <RouterLink
       to={`/projects/${project.slug}`}
-      className="block rounded-2xl border bg-background p-5 no-underline transition-all hover:-translate-y-0.5 hover:bg-muted hover:shadow-sm"
+      className="card-lift block rounded-2xl border bg-background p-5 no-underline transition-all hover:-translate-y-0.5 hover:bg-muted hover:shadow-sm"
     >
       <h3 className="text-lg font-medium text-foreground">{project.title}</h3>
       <p className="mt-1.5 text-sm text-muted-foreground line-clamp-2">
