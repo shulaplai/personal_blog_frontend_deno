@@ -109,6 +109,19 @@
   transform: translateY(-5rem);
 }
 
+/* Joye header scrolled state — inner container */
+[data-theme-style='joye'] header[data-scroll='not-top'] > div {
+  border-color: hsl(var(--color-border));
+  background-color: hsl(var(--color-background));
+  box-shadow:
+    0 0 0 1px hsl(var(--color-foreground) / 0.08),
+    0 10px 15px -3px hsl(var(--color-foreground) / 0.08),
+    0 4px 6px -4px hsl(var(--color-foreground) / 0.08);
+}
+[data-theme-style='joye'].dark header[data-scroll='not-top'] > div {
+  background-color: hsl(var(--color-muted));
+}
+
 /* Joye card hover: lift instead of bg shift */
 [data-theme-style='joye'] .card-lift {
   transition:

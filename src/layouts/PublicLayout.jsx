@@ -1,8 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { fetchPublicSettings } from '@/store/slices/publicSettingsSlice';
-import { useDarkMode } from '@/context/ThemeContext';
+import { useDarkMode, useThemeStyle } from '@/context/ThemeContext';
 import { GitHubIcon, SunIcon, MoonIcon, MenuIcon, CloseIcon } from '@/components/public/Icons';
 import { profile } from '@/data/profile';
 
@@ -19,7 +19,10 @@ export default function PublicLayout({ children }) {
   const { settings, status: settingsStatus } = useAppSelector((state) => state.publicSettings);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [headerVisible, setHeaderVisible] = useState(true);
+  const prevScrollY = useRef(0);
   const { darkMode, toggleDarkMode } = useDarkMode();
+  const { themeStyle, toggleThemeStyle } = useThemeStyle();
 
   useEffect(() => {
     if (settingsStatus === 'idle') {
@@ -28,7 +31,17 @@ export default function PublicLayout({ children }) {
   }, [dispatch, settingsStatus]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 20);
+      // Hide header when scrolling down, show when scrolling up (Joye behavior)
+      if (scrollY > 80) {
+        setHeaderVisible(scrollY < prevScrollY.current);
+      } else {
+        setHeaderVisible(true);
+      }
+      prevScrollY.current = scrollY;
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -59,7 +72,12 @@ export default function PublicLayout({ children }) {
       </a>
 
       {/* Header */}
-      <header className="sticky top-4 z-[70] mb-12 px-4 sm:px-7 lg:px-10">
+      <header
+        className="sticky top-4 z-[70] mb-12 px-4 transition-transform sm:px-7 lg:px-10"
+        data-scroll={scrolled ? 'not-top' : 'top'}
+        data-show={String(headerVisible)}
+        style={{ transition: 'transform 0.3s, margin-inline 0.3s' }}
+      >
         <div
           className={`mx-auto flex max-w-3xl items-center justify-between rounded-xl border px-4 py-3 transition-all sm:rounded-2xl ${
             scrolled ? 'glass border-border shadow-sm' : 'border-transparent bg-transparent'
@@ -115,6 +133,35 @@ export default function PublicLayout({ children }) {
               {darkMode ? <SunIcon /> : <MoonIcon />}
             </button>
 
+            {/* Theme style toggle — Joye / Default */}
+            <button
+              onClick={toggleThemeStyle}
+              className="relative flex size-9 cursor-pointer items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-primary"
+              aria-label={
+                themeStyle === 'joye' ? 'Switch to default theme' : 'Switch to Joye theme'
+              }
+              title={themeStyle === 'joye' ? 'Default theme' : 'Joye theme'}
+            >
+              <span
+                className={`absolute inset-0 m-auto flex items-center justify-center text-xs font-bold transition-all duration-[250ms] ${
+                  themeStyle === 'default'
+                    ? 'opacity-100 blur-none scale-100'
+                    : 'opacity-0 blur-xs scale-[0.6] pointer-events-none'
+                }`}
+              >
+                J
+              </span>
+              <span
+                className={`absolute inset-0 m-auto flex items-center justify-center text-xs font-bold transition-all duration-[250ms] ${
+                  themeStyle === 'joye'
+                    ? 'opacity-100 blur-none scale-100'
+                    : 'opacity-0 blur-xs scale-[0.6] pointer-events-none'
+                }`}
+              >
+                D
+              </span>
+            </button>
+
             {/* Mobile menu button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -152,7 +199,11 @@ export default function PublicLayout({ children }) {
 
       {/* Main content */}
       <main className="relative z-0 flex-1 px-4 sm:px-7 lg:px-10" id="public-main-content">
-        <div className="mx-auto w-full max-w-3xl">{children}</div>
+        <div
+          className={`mx-auto w-full ${themeStyle === 'joye' ? 'md:w-4/5 lg:w-5/6' : 'max-w-3xl'}`}
+        >
+          {children}
+        </div>
       </main>
 
       {/* Footer */}
