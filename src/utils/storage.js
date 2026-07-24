@@ -1,5 +1,6 @@
 const TOKEN_KEY = 'auth_token';
 const DARK_MODE_KEY = 'dark_mode';
+const THEME_STYLE_KEY = 'theme_style';
 
 function safeGet(key) {
   try {
@@ -52,5 +53,15 @@ export const storage = {
   },
   removeDarkMode() {
     safeRemove(DARK_MODE_KEY);
+  },
+
+  getThemeStyle() {
+    return safeGet(THEME_STYLE_KEY);
+  },
+  setThemeStyle(value) {
+    safeSet(THEME_STYLE_KEY, value);
+  },
+  removeThemeStyle() {
+    safeRemove(THEME_STYLE_KEY);
   },
 };
