@@ -133,24 +133,6 @@
   box-shadow: 0 4px 12px hsl(var(--color-foreground) / 0.06);
 }
 
-/* Joye section titles */
-[data-theme-style='joye'] .section-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-
-/* Joye link arrow — different animation */
-[data-theme-style='joye'] .joye-arrow line {
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 250ms ease;
-}
-[data-theme-style='joye'] .joye-arrow:hover line,
-[data-theme-style='joye'] .group\/link:hover .joye-arrow line {
-  transform: scaleX(1);
-}
-
 /* Base */
 body {
   font-family: var(--font-sans);

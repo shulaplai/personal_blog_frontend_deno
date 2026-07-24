@@ -6,7 +6,7 @@ import { fetchPublicPosts } from '@/store/slices/publicPostsSlice';
 import { fetchPublicProjects } from '@/store/slices/publicProjectsSlice';
 import { formatDate } from '@/utils/formatters';
 import { useDocumentTitle } from '@/utils/useDocumentTitle';
-import { ArrowRightIcon, GitHubIcon } from '@/components/public/Icons';
+import { ArrowRightIcon, GitHubIcon, LocationIcon } from '@/components/public/Icons';
 import ProfileHero from '@/components/public/ProfileHero';
 import { SkeletonLine, SkeletonBlock } from '@/components/public/Skeletons';
 import { profile } from '@/data/profile';
@@ -86,19 +86,7 @@ export default function HomePage() {
               <h1 className="text-3xl font-bold">{profile.name}</h1>
               <div className="flex flex-wrap justify-center gap-x-7 gap-y-3 text-sm text-muted-foreground">
                 <span className="inline-flex items-center gap-x-1.5">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
+                  <LocationIcon size={16} />
                   Hong Kong
                 </span>
                 <a
