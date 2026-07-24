@@ -271,3 +271,14 @@ aside,
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme-style] button span {
+    transition-duration: 0s !important;
+  }
+  header[data-scroll],
+  header[data-show] {
+    transition: none !important;
+  }
+}
