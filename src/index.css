@@ -1,13 +1,13 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-highlight: #659EB9;
-  --color-background: #FCFCFD;
+  --color-highlight: #659eb9;
+  --color-background: #fcfcfd;
   --color-foreground: #1a1a2e;
   --color-muted: #f3f4f6;
   --color-muted-foreground: #6b7280;
   --color-border: #e5e7eb;
-  --color-primary: #659EB9;
+  --color-primary: #659eb9;
   --color-primary-foreground: #f0f7fa;
   --color-code-bg: #f8fafc;
   --color-code-fg: #1e293b;
@@ -18,15 +18,124 @@
 }
 
 .dark {
-  --color-background: #0B0B10;
+  --color-background: #0b0b10;
   --color-foreground: #e5e7eb;
   --color-muted: #1f2937;
   --color-muted-foreground: #9ca3af;
   --color-border: #1f2937;
-  --color-primary: #B3ECFF;
+  --color-primary: #b3ecff;
   --color-primary-foreground: #1e293b;
   --color-code-bg: #111827;
   --color-code-fg: #e5e7eb;
+}
+
+/* Joye theme — light mode */
+[data-theme-style='joye'] {
+  --color-highlight: hsl(200 29% 45%);
+  --color-background: hsl(210 33% 99%);
+  --color-foreground: hsl(240 10% 3.9%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(240 10% 3.9%);
+  --color-muted: hsl(240 4.8% 95%);
+  --color-muted-foreground: hsl(240 3.8% 28.1%);
+  --color-border: hsl(240 5.9% 88%);
+  --color-primary: hsl(200 29% 45%);
+  --color-primary-foreground: hsl(0 0% 92.5%);
+  --color-code-bg: hsl(220 14% 93%);
+  --color-code-fg: hsl(220 13% 18%);
+  --color-secondary: hsl(240 4.8% 95.9%);
+  --color-secondary-foreground: hsl(240 5.9% 10%);
+  --color-accent: hsl(240 4.8% 95.9%);
+  --color-accent-foreground: hsl(240 5.9% 10%);
+  --color-destructive: hsl(0 72.22% 50.59%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-ring: hsl(240 5.9% 10%);
+  --radius-lg: 0.5rem;
+  --radius-2xl: 1rem;
+}
+
+/* Joye theme — dark mode */
+[data-theme-style='joye'].dark {
+  --color-highlight: hsl(195 95% 85%);
+  --color-background: hsl(240 20.54% 5.2%);
+  --color-foreground: hsl(0 0% 98%);
+  --color-card: hsl(240 10% 3.9%);
+  --color-card-foreground: hsl(0 0% 98%);
+  --color-muted: hsl(240 5.9% 12%);
+  --color-muted-foreground: hsl(240 5% 74.9%);
+  --color-border: hsl(240 3.7% 19.9%);
+  --color-primary: hsl(195 95% 85%);
+  --color-primary-foreground: hsl(240 3.7% 15.9%);
+  --color-code-bg: hsl(240 5.9% 12%);
+  --color-code-fg: hsl(0 0% 92%);
+  --color-secondary: hsl(240 3.7% 15.9%);
+  --color-secondary-foreground: hsl(0 0% 98%);
+  --color-accent: hsl(240 3.7% 15.9%);
+  --color-accent-foreground: hsl(0 0% 98%);
+  --color-destructive: hsl(0 62.8% 30.6%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-ring: hsl(240 4.9% 83.9%);
+}
+
+/* Joye typography — headings are medium (500) not bold (700) */
+[data-theme-style='joye'] h1,
+[data-theme-style='joye'] h2,
+[data-theme-style='joye'] h3,
+[data-theme-style='joye'] h4,
+[data-theme-style='joye'] h5,
+[data-theme-style='joye'] h6 {
+  font-weight: 500;
+}
+
+[data-theme-style='joye'] .glass {
+  background-color: hsl(var(--color-background) / 0.9);
+}
+[data-theme-style='joye'].dark .glass {
+  background-color: hsl(var(--color-muted) / 0.9);
+}
+
+/* Joye header scroll behavior */
+[data-theme-style='joye'] header[data-scroll='not-top'] {
+  margin-inline: 0;
+}
+
+@media (min-width: 800px) {
+  [data-theme-style='joye'] header[data-scroll='not-top'] {
+    margin-inline: 8%;
+  }
+}
+
+[data-theme-style='joye'] header[data-show='false'] {
+  transform: translateY(-5rem);
+}
+
+/* Joye card hover: lift instead of bg shift */
+[data-theme-style='joye'] .card-lift {
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+[data-theme-style='joye'] .card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px hsl(var(--color-foreground) / 0.06);
+}
+
+/* Joye section titles */
+[data-theme-style='joye'] .section-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Joye link arrow — different animation */
+[data-theme-style='joye'] .joye-arrow line {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 250ms ease;
+}
+[data-theme-style='joye'] .joye-arrow:hover line,
+[data-theme-style='joye'] .group\/link:hover .joye-arrow line {
+  transform: scaleX(1);
 }
 
 /* Base */
@@ -43,8 +152,14 @@ body {
 
 /* Animations */
 @keyframes fade-in-up {
-  0% { transform: translateY(2rem); opacity: 0; }
-  100% { transform: translateY(0); opacity: 1; }
+  0% {
+    transform: translateY(2rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .animate-fade-in {
@@ -58,10 +173,18 @@ body {
   }
 }
 
-.animate-delay-50 { animation-delay: 50ms; }
-.animate-delay-100 { animation-delay: 100ms; }
-.animate-delay-150 { animation-delay: 150ms; }
-.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-50 {
+  animation-delay: 50ms;
+}
+.animate-delay-100 {
+  animation-delay: 100ms;
+}
+.animate-delay-150 {
+  animation-delay: 150ms;
+}
+.animate-delay-200 {
+  animation-delay: 200ms;
+}
 
 /* Link arrow animation */
 .link-arrow {
@@ -112,11 +235,24 @@ body {
 /* Smooth transitions for theme — scoped to semantic elements only.
    Avoids the expensive [class*="hover:"] universal selector that forces
    the browser to re-evaluate every element on every style recalculation. */
-a, button, input, select, textarea,
+a,
+button,
+input,
+select,
+textarea,
 .theme-transition,
-.card, .prose, .glass,
-header, footer, nav, main, article, aside,
-.bg-background, .bg-muted, .bg-primary-foreground,
+.card,
+.prose,
+.glass,
+header,
+footer,
+nav,
+main,
+article,
+aside,
+.bg-background,
+.bg-muted,
+.bg-primary-foreground,
 .border-border {
   transition-property: color, background-color, border-color;
   transition-duration: 0.15s;
