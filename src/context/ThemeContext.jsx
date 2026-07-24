@@ -24,10 +24,15 @@ export function ThemeProvider({ children }) {
   // Sync dark class and meta theme-color
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
-    document
-      .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', darkMode ? '#0B0B10' : '#FCFCFD');
-  }, [darkMode]);
+    const isJoye = themeStyle === 'joye';
+    let color;
+    if (isJoye) {
+      color = darkMode ? '#0a0a10' : '#f8f9fb';
+    } else {
+      color = darkMode ? '#0B0B10' : '#FCFCFD';
+    }
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color);
+  }, [darkMode, themeStyle]);
 
   // Sync data-theme-style attribute
   useEffect(() => {
